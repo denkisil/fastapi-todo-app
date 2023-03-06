@@ -48,14 +48,14 @@ pipenv run main.py
 TodoCreate:
 ```
 	title: str
-	description: str
+	desc: str
 	important: bool = False
 ```
 
 TodoUpdate:
 ```
 	title: str | None = None
-	description: str | None = None
+	desc: str | None = None
 	important: bool | None = None
 	complete: bool | None = None
 ```
