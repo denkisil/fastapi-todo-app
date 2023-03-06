@@ -7,7 +7,7 @@ from peewee import DoesNotExist
 
 
 def add_todo(new_todo: TodoCreate):
-	todo_to_create = Todos.create(title = new_todo.title, desc=new_todo.description)
+	todo_to_create = Todos.create(**dict(new_todo))
 
 	todo_to_create.save()
 

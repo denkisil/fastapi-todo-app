@@ -1,6 +1,37 @@
 # this is todo app, builded with FastAPI, SQLite, Peewee
 
-### API
+# Requirements: Python 3.10+
+
+# Deploy
+
+1. Clone repository
+```
+git clone https://github.com/denkisil/fastapi-todo-app
+```
+
+2. Install requirements
+```
+pip install -r requirements.txt
+```
+or
+```
+pipenv install -r requirements.txt
+```
+
+3. Create `todos.db` file in project's root folder
+
+4. Before you run server uncomment 10 line in `src/app.py` file
+
+5. Then run:
+```
+python main.py
+```
+or
+```
+pipenv run main.py
+```
+
+# API
 
 #### GET `/api/todos` - all todos
 

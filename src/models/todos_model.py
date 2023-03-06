@@ -2,14 +2,14 @@ from pydantic import BaseModel
 
 class TodoCreate(BaseModel):
 	title: str
-	description: str
+	desc: str
 	important: bool = False
 
 	class Config:
 		schema_extra = {
 			'example': {
 				'title': 'Take a cup of tea',
-				'description': 'Take a cup of tea with tasty sandwichies',
+				'desc': 'Take a cup of tea with tasty sandwichies',
 				'important': True
 			}
 		}
@@ -17,7 +17,7 @@ class TodoCreate(BaseModel):
 
 class TodoUpdate(BaseModel):
 	title: str | None = None
-	description: str | None = None
+	desc: str | None = None
 	important: bool | None = None
 	complete: bool | None = None
 
@@ -25,7 +25,7 @@ class TodoUpdate(BaseModel):
 		schema_extra = {
 			'example': {
 				'title': 'Take a cup of tea',
-				'description': 'Take a cup of tea with tasty sandwichies',
+				'desc': 'Take a cup of tea with tasty sandwichies',
 				'important': True,
 				'complete': True
 			}

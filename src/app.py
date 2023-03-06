@@ -7,7 +7,7 @@ app = FastAPI()
 
 try:
 	db.connect()
-	# db.create_tables([Todos])
+	db.create_tables([Todos])
 except(e):
 	raise e
 
