@@ -1,6 +1,6 @@
-# this is todo app, builded with FastAPI, SQLite, Peewee
+# this is todo app, builded with FastAPI, SQLite, Supabase
 
-# Requirements: Python 3.10+
+# Requirements: Python 3.11+
 
 # Deploy
 
@@ -18,11 +18,9 @@ or
 pipenv install -r requirements.txt
 ```
 
-3. Create `todos.db` file in project's root folder
+3. Add environment variables (see in .env.example)
 
-4. Before you run server uncomment 10 line in `src/app.py` file
-
-5. Then run:
+4. Then run:
 ```
 python main.py
 ```
@@ -60,5 +58,6 @@ TodoUpdate:
 	complete: bool | None = None
 ```
 
-TODO:
-- make client on Vue
+Todo:
+[ ] Create simple client
+[ ] Add simple Authentication

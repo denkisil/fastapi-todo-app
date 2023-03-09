@@ -1,56 +1,64 @@
 from src.models.todos_model import TodoCreate, TodoUpdate
-from src.database.database import Todos
+from src.errors import database_errors
+from src.database.todos import Todos
 
-from playhouse.shortcuts import model_to_dict
 from fastapi import HTTPException
-from peewee import DoesNotExist
 
 
-def add_todo(new_todo: TodoCreate):
-	todo_to_create = Todos.create(**dict(new_todo))
-
-	todo_to_create.save()
-
-	return {'is_todo_created': True, 'todo': new_todo}
+todos = Todos()
 
 
-def all_todos_list():
-	all_todos = [todo for todo in Todos.select().dicts()]
+def create_todo(new_todo: TodoCreate):
+	try:
+		data = todos.create_todo(new_todo)
+	except Exception as exp:
+		print(exp)
+		raise HTTPException(status_code=500, detail={'code': "E_SERVER_INTERNAL", 'msg': "something happens on server"})
 
-	return {'is_all_todos_got': True, 'todos': all_todos}
+	return {'is_todo_created': True, 'todo_new': data}
 
+
+def get_all_todos():
+	try:
+		data = todos.get_all_todos()
+	except Exception as exp:
+		print(exp)
+		raise HTTPException(status_code=500, detail={'code': "E_SERVER_INTERNAL", 'msg': "something happens on server"})
+
+	return {'is_all_todo_got': True, 'todos_all': data}
 
 def get_todo_by_id(id: int):
-	todo_got = model_to_dict(get_todo(id))
-
-	return {'is_todo_got': True, 'todo_id': id, 'todo_got': todo_got}
-
-
-def update_todo_by_id(id: int, update_todo: TodoUpdate):
-	todo_to_update = model_to_dict(get_todo(id))
-
-	for key, value in update_todo:
-		if value != None:
-			todo_to_update[key] = value
-
-	Todos.update(**todo_to_update).where(Todos.id == id).execute()
-
-	return {'is_todo_updated': True, 'todo_upd': todo_to_update}
-		
-
-def delete_todo_by_id(id: int):
-	todo_to_delete = get_todo(id)
-
-	todo_to_delete.delete_instance()
-
-	return {'is_todo_deleted': True, 'todo_del': todo_to_delete.__data__}
-
-
-def get_todo(id: int):
 	try:
-		todo_got = Todos.get(Todos.id==id)
-		return todo_got
-	except DoesNotExist:
-		raise HTTPException(status_code=404, detail={'msg': 'cannot find document by id', 'code': 'E_NOT_FOUND'})
-	except:
-		raise HTTPException(status_code=500, detail={'msg': 'something happen on server', 'code': 'E_SERVER_INTERNAL'})
+		data = todos.get_todo_by_id(id)
+	except database_errors.DocNotFound:
+		raise HTTPException(status_code=404, detail={'code': "E_NOT_FOUND", 'msg': f'cannot find doc by this id {id}'})
+	except Exception as exp:
+		print(exp)
+		raise HTTPException(status_code=500, detail={'code': "E_SERVER_INTERNAL", 'msg': "something happens on server"})
+
+	return {'is_todo_got': True, 'todo_got': data}
+
+
+def delete_todo(id: int):
+	try:
+		data = todos.delete_todo(id)
+	except database_errors.DocNotFound:
+		raise HTTPException(status_code=404, detail={'code': "E_NOT_FOUND", 'msg': f'cannot find doc by this id {id}'})
+	except Exception as exp:
+		print(exp)
+		raise HTTPException(status_code=500, detail={'code': "E_SERVER_INTERNAL", 'msg': "something happens on server"})
+
+	return {'is_todo_deleted': True, 'todo_del': data}
+
+
+def update_todo(id: int, update_todo: TodoUpdate):
+	try:
+		todo_upd = todos.update_todo(id, update_todo)
+	except database_errors.DocNotFound:
+		raise HTTPException(status_code=404, detail={'code': "E_NOT_FOUND", 'msg': f'cannot find doc by this id {id}'})
+	except Exception as exp:
+		print(exp)
+		raise HTTPException(status_code=500, detail={'code': "E_SERVER_INTERNAL", 'msg': "something happens on server"})
+
+
+	return {'is_todo_updated': True,'todo_upd': todo_upd}

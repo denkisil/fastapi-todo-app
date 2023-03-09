@@ -1,17 +1,11 @@
-from peewee import *
+from src.config.config import return_settings
 
-db = SqliteDatabase("../../todos.db")
-
-
-class Base(Model):
-	class Meta:
-		database = db
+from supabase import Client, create_client
 
 
-class Todos(Base):
-	id = AutoField(primary_key=True)
-	title = CharField(max_length=36)
-	desc = CharField(max_length=128)
-	important = BooleanField(default=False)
-	complete = BooleanField(default=False)
+env = return_settings()
+	
 
+class Base:
+	def __init__(self):
+		self.db: Client = create_client(env.SUPABASE_URL, env.SUPABASE_KEY)

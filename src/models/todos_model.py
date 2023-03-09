@@ -1,9 +1,9 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class TodoCreate(BaseModel):
-	title: str
-	desc: str
-	important: bool = False
+	title: str = Field(min_length=6, max_length=32)
+	desc: str = Field(min_length=8, max_length=128)
+	important: bool = Field(default=False)
 
 	class Config:
 		schema_extra = {
@@ -16,10 +16,10 @@ class TodoCreate(BaseModel):
 
 
 class TodoUpdate(BaseModel):
-	title: str | None = None
-	desc: str | None = None
-	important: bool | None = None
-	complete: bool | None = None
+	title: str | None = Field(default=None, min_length=6, max_length=32)
+	desc: str | None = Field(default=None, min_length=8, max_length=128)
+	important: bool | None = Field(default=None)
+	complete: bool | None = Field(default=None)
 
 	class Config:
 		schema_extra = {
