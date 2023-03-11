@@ -4,6 +4,7 @@ class TodoCreate(BaseModel):
 	title: str = Field(min_length=6, max_length=32)
 	desc: str = Field(min_length=8, max_length=128)
 	important: bool = Field(default=False)
+	user_id: int | None = Field(mt=0, default=None)
 
 	class Config:
 		schema_extra = {

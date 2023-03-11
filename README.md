@@ -1,6 +1,7 @@
-# this is todo app, builded with FastAPI, SQLite, Supabase
+# this is todo app, builded with FastAPI, Supabase, Passlib
 
-# Requirements: Python 3.11+
+### Requirements: 
+	- Python 3.11+
 
 # Deploy
 
@@ -29,19 +30,35 @@ or
 pipenv run main.py
 ```
 
+5. go to `127.0.0.1:8000/docs` for testing APi
+
+
 # API
 
-#### GET `/api/todos` - all todos
+#### GET
+	-	`/api/todos` - all todos. Auth required
 
-#### GET `/api/todos/{id}` - todo by id
+	-	`/api/todos/{id}` - todo by id. Auth required
 
-#### POST `/todos/new` - create new todo. Request model - TodoCreate
 
-#### PUT `/todos/{id}` - update todo by id. Request model - TodoUpdate
+#### POST 
+	-	`/api/todos/new` - create new todo. Request model - TodoCreate. Auth required
 
-#### DELETE `/api/todos/id` - delete todo by id
+	-	`/api/users/new` - create new user. Request model - UserCreate
 
-### Models
+	-	`/api/users/auth` - get auth token. Request model - UserAuth
+
+#### PUT 
+	-	`/api/todos/{id}` - update todo by id. Request model - TodoUpdate. Auth required
+
+#### DELETE 
+	-	`/api/todos/{id}` - delete todo by id. Auth required
+
+	-	`/api/users/user_delete` - delete your account with created todos. Auth required
+
+
+
+# Models
 
 TodoCreate:
 ```
@@ -58,6 +75,14 @@ TodoUpdate:
 	complete: bool | None = None
 ```
 
-Todo:
-[ ] Create simple client
-[ ] Add simple Authentication
+UserCreate:
+```
+	username: str = Field(min_length=6, max_length=32)
+	password: str = Field(min_length=8, max_length=32)
+```
+
+UserAuth:
+```
+	username: str
+	password: str
+```

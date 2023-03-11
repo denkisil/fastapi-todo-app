@@ -8,6 +8,10 @@ uvicorn = "*"
 fastapi = "*"
 supabase = "*"
 pydantic = {extras = ["dotenv"], version = "*"}
+passlib = "*"
+bcrypt = "*"
+python-jose = {extras = ["cryptography"], version = "*"}
+python-multipart = "*"
 
 [dev-packages]
 
