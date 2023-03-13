@@ -17,11 +17,12 @@ env = return_settings()
 
 def create_user(new_user: UserCreate):
 	try:
-		user_created = users.create_user(new_user)
+		user_created = users.create_user(dict(new_user))
 
 		return {'is_user_created': True, 'user_new': user_created}
 	except database_errors.DocIsExist:
 		raise error_responses.user_exist(new_user.username)
+		
 	except Exception as exp:
 		print(exp)
 		raise error_responses.server_internal
@@ -60,6 +61,7 @@ def delete_account(token: str):
 
 	except auth_errors.UserIsBroken:
 		raise error_responses.user_is_broken
+
 	except Exception as exp:
 		print(exp)
 		raise error_responses.server_internal

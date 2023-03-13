@@ -12,6 +12,8 @@ passlib = "*"
 bcrypt = "*"
 python-jose = {extras = ["cryptography"], version = "*"}
 python-multipart = "*"
+pillow = "*"
+markdown = "*"
 
 [dev-packages]
 

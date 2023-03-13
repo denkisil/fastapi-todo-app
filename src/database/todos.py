@@ -1,7 +1,8 @@
 from src.models.todos_model import TodoCreate, TodoUpdate
 from src.database.database import Base
-from src.database.users import Users
 from src.errors import database_errors
+
+import markdown
 
 class Todos(Base):
 
@@ -33,6 +34,8 @@ class Todos(Base):
 
 		new_todo['user_id'] = user['id']
 
+		new_todo['desc'] = markdown.markdown(new_todo['desc'])
+
 		data = self.db.table("todos").insert(new_todo).execute()
 
 		return data.data
@@ -45,7 +48,6 @@ class Todos(Base):
 		if todo_found.data == []:
 			raise database_errors.DocNotFound(f'cannot find doc by this id: {id}')
 			
-		
 		todo_del = self.db.table("todos").delete().eq("id", id).execute()
 
 		return todo_del.data
@@ -69,7 +71,9 @@ class Todos(Base):
 			if update_data[key] != None:
 				data_to_update[key] = update_data[key]
 
-		
+		if data_to_update['desc']:
+			data_to_update['desc'] = markdown.markdown(new_todo['desc'])
+
 		todo_upd = self.db.table("todos").update(data_to_update).eq("id", id).execute()
 
 		return todo_upd.data

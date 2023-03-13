@@ -14,4 +14,8 @@ doc_is_exist = lambda id: HTTPException(status_code=404, detail={'code': "E_NOT_
 
 todo_is_complete = HTTPException(status_code=403, detail={'code': 'E_NOT_ACCESS', 'msg': 'cannot edit completed todo'})
 
-user_is_broken = HTTPException(status_code=403, detail={'code': 'E_NOT_ACCESS','msg': 'logged in user is broken'})
+user_is_broken = HTTPException(status_code=403, detail={'code': 'E_NOT_ACCESS', 'msg': 'logged in user is broken'})
+
+file_isnt_image = HTTPException(status_code=400, detail={'code': 'E_INVALID_BODY', 'msg': 'file to upload isnt image'})
+
+filesize_bigger_than = HTTPException(status_code=400, detail={'code': 'E_INVALID_BODY', 'msg': 'filesize of file to upload bigger tham 4 mbs'})

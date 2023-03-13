@@ -10,7 +10,7 @@ class TodoCreate(BaseModel):
 		schema_extra = {
 			'example': {
 				'title': 'Take a cup of tea',
-				'desc': 'Take a cup of tea with tasty sandwichies',
+				'desc': 'Take a cup of tea with **tasty** sandwichies',
 				'important': True
 			}
 		}
@@ -26,7 +26,7 @@ class TodoUpdate(BaseModel):
 		schema_extra = {
 			'example': {
 				'title': 'Take a cup of tea',
-				'desc': 'Take a cup of tea with tasty sandwichies',
+				'desc': 'Take a cup of tea with **tasty** biscuites',
 				'important': True,
 				'complete': True
 			}

@@ -5,5 +5,6 @@ class DocNotFound(Exception):
 class DocIsExist(Exception):
 	pass
 
+
 class TodoIsComplete(Exception):
 	pass

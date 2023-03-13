@@ -1,6 +1,10 @@
 # this is todo app, builded with FastAPI, Supabase, Passlib
 
-### Requirements: 
+at now you can create users and auth as signed up users, make todos with Markdown support and upload images for your todos
+
+in plans i'm have create simple client on Vue/React
+
+# Requirements: 
 	- Python 3.11+
 
 # Deploy
@@ -36,6 +40,8 @@ pipenv run main.py
 # API
 
 #### GET
+	-	`/imgs` - static files for images
+
 	-	`/api/todos` - all todos. Auth required
 
 	-	`/api/todos/{id}` - todo by id. Auth required
@@ -47,6 +53,8 @@ pipenv run main.py
 	-	`/api/users/new` - create new user. Request model - UserCreate
 
 	-	`/api/users/auth` - get auth token. Request model - UserAuth
+
+	- 	`/api/imgs/upload` - upload a image. Request - image file
 
 #### PUT 
 	-	`/api/todos/{id}` - update todo by id. Request model - TodoUpdate. Auth required
@@ -61,28 +69,28 @@ pipenv run main.py
 # Models
 
 TodoCreate:
-```
+```py
 	title: str
-	desc: str
+	desc: str # Markdown support
 	important: bool = False
 ```
 
 TodoUpdate:
-```
+```py
 	title: str | None = None
-	desc: str | None = None
+	desc: str | None = None # Markdown support
 	important: bool | None = None
 	complete: bool | None = None
 ```
 
 UserCreate:
-```
+```py
 	username: str = Field(min_length=6, max_length=32)
 	password: str = Field(min_length=8, max_length=32)
 ```
 
 UserAuth:
-```
+```py
 	username: str
 	password: str
 ```
