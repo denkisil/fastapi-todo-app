@@ -15,6 +15,8 @@ def upload_image(token: str, new_image: UploadFile = File(...)):
 
 		filedata = new_image.file.read()
 
+		is_file_valid = image_deps.valid_image(new_image.content_type, new_image.file.read())
+
 		user_data = auth_deps.verify_token(token)
 
 		filename = image_deps.create_image_filename(filename)
